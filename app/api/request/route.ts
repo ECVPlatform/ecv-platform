@@ -2,14 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 export async function POST(req: NextRequest) {
+  const supabase = getSupabase()
+  const resend = getResend()
   try {
     const body = await req.json()
     const { chapter_id, months, guests, hotel, dates, intention, notes, user_email, user_name } = body
@@ -64,7 +70,7 @@ export async function POST(req: NextRequest) {
           </p>
         </div>
       `,
-    }).catch(e => console.error('Resend error:', e)) // Non-fatal
+    }).catch(e => console.error('Resend error:', e))
 
     return NextResponse.json({ success: true, id: data?.id })
   } catch (err) {
