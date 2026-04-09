@@ -175,7 +175,9 @@ export default function ChapterPage({ params }: { params: { id: string } }) {
         </div>
 
         <div className="px-6 py-4">
-          <Hr style={{ marginTop: '4px' }} />
+          <div style={{ marginTop: '4px' }}>
+  <Hr />
+</div>
           <Label>What's included</Label>
           <ul className="list-none">
             {INCLUDED.map(item => (
