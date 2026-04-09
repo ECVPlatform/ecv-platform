@@ -3,59 +3,99 @@ import { supabaseAdmin } from '@/lib/supabase'
 
 export const dynamic = 'force-dynamic'
 
-async function safeQuery(fn: () => Promise<any>) {
-  try {
-    const res = await fn()
-    return {
-      data: res.data ?? [],
-      count: res.count ?? 0,
-      error: null,
-    }
-  } catch (e) {
-    console.error('Dashboard query error:', e)
-    return {
-      data: [],
-      count: 0,
-      error: e,
-    }
-  }
-}
-
 async function getDashboardData() {
   const supabase = supabaseAdmin()
 
-  const [requests, memoirs, gifts, hosts] = await Promise.all([
-    safeQuery(() =>
-      supabase
-        .from('requests')
-        .select('*', { count: 'exact' })
-        .order('created_at', { ascending: false })
-        .limit(5)
-    ),
-    safeQuery(() =>
-      supabase
-        .from('memoirs')
-        .select('*', { count: 'exact' })
-        .order('created_at', { ascending: false })
-        .limit(5)
-    ),
-    safeQuery(() =>
-      supabase
-        .from('gifts')
-        .select('*', { count: 'exact' })
-        .order('created_at', { ascending: false })
-        .limit(5)
-    ),
-    safeQuery(() =>
-      supabase
-        .from('host_applications')
-        .select('*', { count: 'exact' })
-        .order('created_at', { ascending: false })
-        .limit(5)
-    ),
-  ])
+  let requests: any[] = []
+  let memoirs: any[] = []
+  let gifts: any[] = []
+  let hosts: any[] = []
 
-  return { requests, memoirs, gifts, hosts }
+  let requestsCount = 0
+  let memoirsCount = 0
+  let giftsCount = 0
+  let hostsCount = 0
+
+  try {
+    const { data, count, error } = await supabase
+      .from('requests')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    if (error) {
+      console.error('Requests query error:', error)
+    } else {
+      requests = data ?? []
+      requestsCount = count ?? 0
+    }
+  } catch (e) {
+    console.error('Requests fetch failed:', e)
+  }
+
+  try {
+    const { data, count, error } = await supabase
+      .from('memoirs')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    if (error) {
+      console.error('Memoirs query error:', error)
+    } else {
+      memoirs = data ?? []
+      memoirsCount = count ?? 0
+    }
+  } catch (e) {
+    console.error('Memoirs fetch failed:', e)
+  }
+
+  try {
+    const { data, count, error } = await supabase
+      .from('gifts')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    if (error) {
+      console.error('Gifts query error:', error)
+    } else {
+      gifts = data ?? []
+      giftsCount = count ?? 0
+    }
+  } catch (e) {
+    console.error('Gifts fetch failed:', e)
+  }
+
+  try {
+    const { data, count, error } = await supabase
+      .from('host_applications')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    if (error) {
+      console.error('Hosts query error:', error)
+    } else {
+      hosts = data ?? []
+      hostsCount = count ?? 0
+    }
+  } catch (e) {
+    console.error('Hosts fetch failed:', e)
+  }
+
+  return {
+    requests,
+    memoirs,
+    gifts,
+    hosts,
+    counts: {
+      requests: requestsCount,
+      memoirs: memoirsCount,
+      gifts: giftsCount,
+      hosts: hostsCount,
+    },
+  }
 }
 
 function StatCard({
@@ -343,22 +383,22 @@ export default async function DashboardPage() {
         >
           <StatCard
             label="Requests"
-            value={data.requests.count}
+            value={data.counts.requests}
             sub="Direct signals of interest entering the system."
           />
           <StatCard
             label="Memoirs"
-            value={data.memoirs.count}
+            value={data.counts.memoirs}
             sub="Experiences that became something worth keeping."
           />
           <StatCard
             label="Gifts"
-            value={data.gifts.count}
+            value={data.counts.gifts}
             sub="Moments intentionally passed to someone else."
           />
           <StatCard
             label="Host Applications"
-            value={data.hosts.count}
+            value={data.counts.hosts}
             sub="New supply and potential curation candidates."
           />
         </div>
@@ -378,11 +418,11 @@ export default async function DashboardPage() {
                 desc="Where guest intent is showing up first."
               />
 
-              {data.requests.data.length === 0 ? (
+              {data.requests.length === 0 ? (
                 <EmptyState text="まだ request データがありません。" />
               ) : (
                 <div style={{ display: 'grid', gap: '10px' }}>
-                  {data.requests.data.map((r: any) => (
+                  {data.requests.map((r: any) => (
                     <DataRow
                       key={r.id}
                       top={`${r.chapter_id ?? 'Chapter'} · ${r.status ?? 'new'}`}
@@ -402,11 +442,11 @@ export default async function DashboardPage() {
                 desc="What remained after the experience ended."
               />
 
-              {data.memoirs.data.length === 0 ? (
+              {data.memoirs.length === 0 ? (
                 <EmptyState text="まだ memoir データがありません。" />
               ) : (
                 <div style={{ display: 'grid', gap: '10px' }}>
-                  {data.memoirs.data.map((m: any) => (
+                  {data.memoirs.map((m: any) => (
                     <DataRow
                       key={m.id}
                       top={`${m.chapter_id ?? 'Chapter'} · ${m.visibility ?? 'private'}`}
@@ -428,11 +468,11 @@ export default async function DashboardPage() {
                 desc="How experiences begin to travel beyond the original guest."
               />
 
-              {data.gifts.data.length === 0 ? (
+              {data.gifts.length === 0 ? (
                 <EmptyState text="まだ gift データがありません。" />
               ) : (
                 <div style={{ display: 'grid', gap: '10px' }}>
-                  {data.gifts.data.map((g: any) => (
+                  {data.gifts.map((g: any) => (
                     <DataRow
                       key={g.id}
                       top={`${g.chapter_id ?? 'Chapter'} · ${g.gift_code ?? 'gift'}`}
@@ -452,11 +492,11 @@ export default async function DashboardPage() {
                 desc="Potential new hosts entering the registry."
               />
 
-              {data.hosts.data.length === 0 ? (
+              {data.hosts.length === 0 ? (
                 <EmptyState text="まだ host application データがありません。" />
               ) : (
                 <div style={{ display: 'grid', gap: '10px' }}>
-                  {data.hosts.data.map((h: any) => (
+                  {data.hosts.map((h: any) => (
                     <DataRow
                       key={h.id}
                       top={`${h.category ?? 'Category'} · ${h.status ?? 'new'}`}
