@@ -1,5 +1,6 @@
 'use client'
 
+import { use } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { CHAPTERS } from '@/lib/data'
@@ -176,8 +177,8 @@ export default function ChapterPage({ params }: { params: { id: string } }) {
 
         <div className="px-6 py-4">
           <div style={{ marginTop: '4px' }}>
-  <Hr />
-</div>
+            <Hr />
+          </div>
           <Label>What's included</Label>
           <ul className="list-none">
             {INCLUDED.map(item => (

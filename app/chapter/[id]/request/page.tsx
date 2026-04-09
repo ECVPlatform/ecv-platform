@@ -7,8 +7,8 @@ import { BackLink, Label, BtnPrimary, BtnGhost, Toast, useToast, TogglePill } fr
 const MONTHS = ['March','April','May','June','July','Aug–Oct','Flexible']
 const GUEST_OPTIONS = ['1','2','Family']
 
-export default function RequestPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id }   = use(params)
+export default function RequestPage({ params }: { params: { id: string } }) {
+  const { id }   = params
   const router   = useRouter()
   const toast    = useToast()
 

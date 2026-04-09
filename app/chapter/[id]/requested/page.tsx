@@ -4,8 +4,8 @@ import { use, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { BackLink, BtnPrimary, BtnGhost } from '@/components/ui'
 
-export default function RequestedPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id }     = use(params)
+export default function RequestedPage({ params }: { params: { id: string } }) {
+  const { id } = params
   const router     = useRouter()
   const [intention, setIntention] = useState('')
 

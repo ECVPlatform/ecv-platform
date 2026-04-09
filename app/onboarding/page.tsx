@@ -164,9 +164,9 @@ const enterPlatform = () => {
         </div>
       )}
 
-      {/* Step 4 — Manifesto (tobacco) */}
+      {/* Step 4 — Manifesto (ink) */}
       {step === 4 && (
-        <div className="flex flex-col flex-1" style={{ background: '#8B7355' }}>
+        <div className="flex flex-col flex-1 bg-ink">
           <StatusBar dark />
           <ProgressDots current={3} />
           <button
@@ -183,7 +183,7 @@ const enterPlatform = () => {
               Experience Creates Value
             </p>
             <h2 className="font-serif font-normal text-3xl mt-3.5 a2" style={{ lineHeight: '1.22', color: '#F0EDE8' }}>
-              Not a marketplace.<br />Not a <em className="italic" style={{ color: 'rgba(240,237,232,.6)' }}>social</em> network.<br />Something that didn't exist before.
+              Not a marketplace.<br />Not a <em className="italic text-tobacco">social</em> network.<br />Something that didn't exist before.
             </h2>
             <div className="w-6 my-4 a3" style={{ height: '1px', background: 'rgba(240,237,232,.2)' }} />
 
@@ -195,7 +195,7 @@ const enterPlatform = () => {
                 { n: '04', t: 'A Memoir stays with you', d: 'Every experience becomes a Memoir — a permanent personal record. Yours to keep, share quietly, or give.' },
               ].map(row => (
                 <div key={row.n} className="flex gap-3.5 py-3" style={{ borderBottom: '0.5px solid rgba(240,237,232,.15)' }}>
-                  <div className="font-serif font-light text-[11px] w-4 flex-shrink-0 pt-0.5" style={{ color: 'rgba(240,237,232,.25)' }}>{row.n}</div>
+                  <div className="font-serif font-light text-[11px] w-4 flex-shrink-0 pt-0.5" style={{ color: 'rgba(240,237,232,.30)' }}>{row.n}</div>
                   <div>
                     <div className="font-serif font-normal text-[16px]" style={{ color: 'rgba(240,237,232,.90)' }}>{row.t}</div>
                     <div className="font-sans font-light text-[11px] mt-0.5" style={{ lineHeight: '1.7', color: 'rgba(240,237,232,.55)' }}>{row.d}</div>
@@ -204,7 +204,7 @@ const enterPlatform = () => {
               ))}
             </div>
 
-            <div className="a4 mt-4 p-4 rounded-xl" style={{ border: '0.5px solid rgba(240,237,232,.18)', background: 'rgba(240,237,232,.06)' }}>
+            <div className="a4 mt-4 p-4 rounded-xl" style={{ border: '0.5px solid rgba(240,237,232,.22)', background: 'rgba(240,237,232,.05)' }}>
               <p className="font-sans font-light text-[8px] mb-2" style={{ letterSpacing: '.18em', textTransform: 'uppercase', color: 'rgba(240,237,232,.40)' }}>
                 This is not social media
               </p>
@@ -213,7 +213,7 @@ const enterPlatform = () => {
               ))}
             </div>
 
-            <div className="a5 mt-3.5 mb-2 rounded-xl overflow-hidden" style={{ background: 'rgba(240,237,232,.08)', border: '0.5px solid rgba(240,237,232,.16)' }}>
+            <div className="a5 mt-3.5 mb-2 rounded-xl overflow-hidden" style={{ background: 'rgba(240,237,232,.07)', border: '0.5px solid rgba(240,237,232,.20)' }}>
               <div className="px-4 py-4">
                 <p className="font-sans font-light text-[8px] mb-2" style={{ letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(240,237,232,.38)' }}>
                   A Memoir — after the experience
