@@ -1,0 +1,12 @@
+# env files（絶対にGitに入れない）
+.env.local
+.env*.local
+
+# node modules（重いから絶対入れない）
+node_modules
+
+# Next.js build
+.next
+
+# misc
+.DS_Store

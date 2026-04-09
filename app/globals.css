@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink:       #1A1916;
+  --parchment: #F0EDE8;
+  --tobacco:   #8B7355;
+  --fog:       #B8B2A8;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #1A1916;
+  display: flex;
+  justify-content: center;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ── SHELL ── */
+.ecv-shell {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--parchment);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ── TYPOGRAPHY ── */
+.font-serif  { font-family: 'Cormorant Garamond', Georgia, serif; }
+.font-sans   { font-family: 'DM Sans', system-ui, sans-serif; }
+
+/* ── SCROLLBAR HIDE ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── CHAPTER ICON BACKGROUNDS ── */
+.icon-nature    { background: linear-gradient(135deg,#243020,#1a2015); }
+.icon-culinary  { background: linear-gradient(135deg,#2a2015,#1a1208); }
+.icon-creative  { background: linear-gradient(135deg,#1a2025,#0d1520); }
+.icon-family    { background: linear-gradient(135deg,#201a14,#140e08); }
+.icon-connect   { background: linear-gradient(135deg,#1e1a26,#120e1a); }
+.icon-urban     { background: linear-gradient(135deg,#1a1a1a,#0d0d0d); }
+.icon-stillness { background: linear-gradient(135deg,#1e2018,#141510); }
+.icon-learning  { background: linear-gradient(135deg,#1a1e24,#0d1018); }
+.icon-legacy    { background: linear-gradient(135deg,#201814,#140e0a); }
+.icon-gratitude { background: linear-gradient(135deg,#1e1a14,#120e08); }
+
+/* ── BOTTOM NAV BAR ── */
+.bnav { border-top: 0.5px solid rgba(26,25,22,.08); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.a1 { animation: fadeUp 0.5s 0.0s ease both; }
+.a2 { animation: fadeUp 0.5s 0.1s ease both; }
+.a3 { animation: fadeUp 0.5s 0.2s ease both; }
+.a4 { animation: fadeUp 0.5s 0.3s ease both; }
+.a5 { animation: fadeUp 0.5s 0.4s ease both; }
+.a6 { animation: fadeUp 0.5s 0.5s ease both; }
+
+/* ── INPUT STYLES ── */
+.ecv-input {
+  width: 100%;
+  border: 0.5px solid rgba(26,25,22,.14);
+  border-radius: 11px;
+  padding: 11px 13px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--ink);
+  background: #fff;
+  outline: none;
+  resize: none;
+  margin-bottom: 14px;
+}
+.ecv-input::placeholder { color: rgba(26,25,22,.2); }
+.ecv-input:focus { border-color: rgba(139,115,85,.4); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26,25,22,.9);
+  color: var(--parchment);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: .05em;
+  padding: 10px 20px;
+  border-radius: 22px;
+  z-index: 1000;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity .3s;
+}
